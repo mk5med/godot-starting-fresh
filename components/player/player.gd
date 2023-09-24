@@ -57,7 +57,8 @@ func startFresh():
 	clone.modulate.a = 0.5
 	clone.mode = MODE.REPLAY
 
-	print("Replaying ", clone, " with ", actionEventLog.events)
+	# Reset the original array
+	actionEventLog.reset()
 
 
 func replayMode(delta: float):
@@ -73,17 +74,7 @@ func replayMode(delta: float):
 		self.queue_free()
 		return
 
-
-func _physics_process(delta):
-	if mode == MODE.REPLAY:
-		replayMode(delta)
-		if replayActionEventLog == null:
-			# Reset the time
-			timeSinceStart = 0
-
-			# Skip processing
-			return
-
+func move(delta: float):
 	# Increment the time so that event records can be replayed
 	timeSinceStart += delta
 
@@ -98,3 +89,15 @@ func _physics_process(delta):
 	self.velocity.x = walk_velocity * speed
 	move_and_slide()
 	pass
+
+func _physics_process(delta):
+	if mode == MODE.REPLAY:
+		replayMode(delta)
+		if replayActionEventLog == null:
+			# Reset the time
+			timeSinceStart = 0
+
+			# Skip processing
+			return
+	
+	move(delta)
