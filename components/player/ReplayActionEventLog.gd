@@ -5,10 +5,15 @@ var events: Array[ActionEventLog.ActionEvent]
 var elapsed_time = 0
 var index = 0
 var done = false
+var inputSource = null
 
-func _init(_events):
+
+func _init(_events, _inputSource):
 	self.events = _events as Array[ActionEventLog.ActionEvent]
 	self.elapsed_time = 0
+	self.index = 0
+	self.done = false
+	self.inputSource = _inputSource
 
 
 func update(delta: float):
@@ -18,18 +23,21 @@ func update(delta: float):
 	# While the index hasn't reached the end of the array
 	# And there are events to replay
 	while index < len(events) and events[index].time < self.elapsed_time:
-		
 		var event = events[index]
 		print("Replaying ", event)
 
 		# If this was a positive change
 		if event.state:
-			Input.action_press(event.action)
+			inputSource.action_press(event.action)
 		else:
-			Input.action_release(event.action)
+			inputSource.action_release(event.action)
 
 		# Move to the next element
 		index += 1
-	
-	done = index == len(events)
+
+	self.done = index == len(events)
 	return done
+
+
+func reset():
+	self._init(self.events, self.inputSource)
