@@ -8,13 +8,15 @@
 [node name="Node2D" type="Node2D"]
 
 [node name="player" parent="." instance=ExtResource("1_5kvux")]
-position = Vector2(252, 45)
+position = Vector2(110, 144)
 
 [node name="surface" parent="." instance=ExtResource("2_0c4sn")]
 position = Vector2(21, 620)
 
+[node name="surface2" parent="." instance=ExtResource("2_0c4sn")]
+position = Vector2(21, 620)
+
 [node name="enemy" parent="." instance=ExtResource("3_usmon")]
-position = Vector2(256, 85)
-travel_points = Array[Vector2]([Vector2(50, 50), Vector2(50, 100), Vector2(100, 75), Vector2(150, 100)])
+position = Vector2(39, 143)
 
 [node name="enemymanager" parent="." instance=ExtResource("4_line8")]

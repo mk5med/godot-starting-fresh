@@ -45,4 +45,5 @@ func drawOverlay():
 
 
 func _process(delta):
-	drawOverlay()
+	# drawOverlay()
+	pass
