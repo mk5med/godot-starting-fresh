@@ -12,13 +12,14 @@ var actionEventLog: ActionEventLog = null
 var replayActionEventLog: ReplayActionEventLog = null
 var initialTransform: Transform2D
 var inputSource = Input
-enum MODE { PLAY, REPLAY }
+const actions = ["ui_left", "ui_right", "ui_up", "ui_down"]
+enum MODE { PLAY, REPLAY, IDLE }
 
 var mode = MODE.PLAY
 
 
 func _ready():
-	self.actionEventLog = ActionEventLog.new(["jump", "ui_left", "ui_right"])
+	self.actionEventLog = ActionEventLog.new(actions)
 	self.initialTransform = Transform2D(self.transform)
 	pass
 
@@ -29,12 +30,12 @@ func _input(_event: InputEvent):
 		return
 
 	# Don't log inputs while replaying
-	if mode == MODE.REPLAY:
+	if mode != MODE.PLAY:
 		return
 
 	# Log whenever a non-jump key is pressed
 	# For space efficiency storing jump events will be limited to valid events
-	for action in ["ui_left", "ui_right", "start_fresh", "jump"]:
+	for action in actions:
 		actionEventLog.checkForStateUpdate(action, Input.is_action_pressed(action), timeSinceStart)
 
 	# The reset button was pressed
@@ -46,7 +47,7 @@ func _input(_event: InputEvent):
 func startFresh():
 	var clone = PlayerScene.instantiate()
 	clone.transform = initialTransform
-	clone.inputSource = InputMock.new(["jump", "ui_left", "ui_right"])
+	clone.inputSource = InputMock.new(actions)
 
 	clone.replayActionEventLog = ReplayActionEventLog.new(
 		actionEventLog.events.duplicate(), clone.inputSource
@@ -59,36 +60,37 @@ func startFresh():
 
 	# Reset the original array
 	actionEventLog.reset()
+	initialTransform = transform
+	timeSinceStart = 0
 
 
 func replayMode(delta: float):
 	var done = replayActionEventLog.update(delta)
-	print("Done: ", done, replayActionEventLog.index, replayActionEventLog.events)
 	if done:
 		# Reset the event log
 		actionEventLog.reset()
 
+		self.mode = MODE.IDLE
+		velocity = Vector2.ZERO
 		# Disable the replay action object
-		replayActionEventLog = null
+		# replayActionEventLog = null
 
-		self.queue_free()
+		# self.queue_free()
 		return
+
 
 func move(delta: float):
 	# Increment the time so that event records can be replayed
 	timeSinceStart += delta
 
-	# Apply gravity
-	self.velocity.y += gravity * delta
-
 	# The jump button is pressed, and the player is on the ground
-	if inputSource.is_action_just_pressed("jump") and is_on_floor():
-		self.velocity.y = jumpSpeed
+	var yVelocity = inputSource.get_axis("ui_up", "ui_down")
+	var xVelocity = inputSource.get_axis("ui_left", "ui_right")
+	self.velocity.x = xVelocity * speed
+	self.velocity.y = yVelocity * speed
 
-	var walk_velocity = inputSource.get_axis("ui_left", "ui_right")
-	self.velocity.x = walk_velocity * speed
-	move_and_slide()
 	pass
+
 
 func _physics_process(delta):
 	if mode == MODE.REPLAY:
@@ -99,5 +101,8 @@ func _physics_process(delta):
 
 			# Skip processing
 			return
-	
-	move(delta)
+	# # Apply gravity
+	# self.velocity.y += gravity * delta
+	if mode != MODE.IDLE:
+		move(delta)
+	move_and_slide()

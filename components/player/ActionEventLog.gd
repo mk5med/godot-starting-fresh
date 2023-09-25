@@ -41,16 +41,6 @@ func _init(_actions):
 func checkForStateUpdate(action: StringName, state: bool, currentTime: float):
 	if action not in self.currentState:
 		return null
-	# assert(
-	# 	action in self.currentState,
-	# 	(
-	# 		"Action "
-	# 		+ action
-	# 		+ " was not included in the constructor."
-	# 		+ "Available actions: "
-	# 		+ str(self.actions)
-	# 	)
-	# )
 
 	# Only record state changes
 	if self.currentState[action] != state:

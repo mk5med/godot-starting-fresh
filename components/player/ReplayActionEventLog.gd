@@ -24,7 +24,6 @@ func update(delta: float):
 	# And there are events to replay
 	while index < len(events) and events[index].time < self.elapsed_time:
 		var event = events[index]
-		print("Replaying ", event)
 
 		# If this was a positive change
 		if event.state:

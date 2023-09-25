@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://bg8dflwyhj63m"]
+[gd_scene load_steps=5 format=3 uid="uid://bg8dflwyhj63m"]
 
 [ext_resource type="PackedScene" uid="uid://bgdhe4waxlfjy" path="res://components/player/player.tscn" id="1_5kvux"]
 [ext_resource type="PackedScene" uid="uid://dnxsng4ofrx2t" path="res://components/surface/surface.tscn" id="2_0c4sn"]
+[ext_resource type="PackedScene" uid="uid://bcjdwcdloq6fa" path="res://components/enemy/enemy.tscn" id="3_usmon"]
+[ext_resource type="PackedScene" uid="uid://ci4yn7jo7mrue" path="res://components/enemy/enemymanager.tscn" id="4_line8"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -9,4 +11,10 @@
 position = Vector2(252, 45)
 
 [node name="surface" parent="." instance=ExtResource("2_0c4sn")]
-position = Vector2(30, 209)
+position = Vector2(21, 620)
+
+[node name="enemy" parent="." instance=ExtResource("3_usmon")]
+position = Vector2(256, 85)
+travel_points = Array[Vector2]([Vector2(50, 50), Vector2(50, 100), Vector2(100, 75), Vector2(150, 100)])
+
+[node name="enemymanager" parent="." instance=ExtResource("4_line8")]
