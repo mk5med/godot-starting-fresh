@@ -1,6 +1,8 @@
 ## Enemy class
 class_name Enemy
+
 extends StaticBody2D
+
 enum ENEMY_STATE { IDLE, MOVING, HUNTING }
 
 var elapsed_time = 0

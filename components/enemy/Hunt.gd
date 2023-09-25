@@ -27,11 +27,18 @@ func update(delta: float):
 		return
 
 	# The hunt is SEARCHING or CHASING
-	self.enemy.look_at(suspiciousPos)
 
-	# Navigate towards the position
-	var dir = (suspiciousPos - self.enemy.position).normalized()
-	self.enemy.move_and_collide(dir * delta * 300)
+	if state == HUNT_STATE.CHASING:
+		self.enemy.look_at(suspiciousPos)
+
+		# Navigate towards the position
+		var dir = (suspiciousPos - self.enemy.position).normalized()
+		self.enemy.move_and_collide(dir * delta * 280)
+	else:
+		# The hunt is SEARCHING
+		# Rotate 360 degrees
+		self.enemy.rotate(PI / SEARCH_TIME * delta * 6)
+		pass
 
 
 func setSearchPos(pos: Vector2):

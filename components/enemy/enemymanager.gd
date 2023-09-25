@@ -1,5 +1,5 @@
 # This script is active as a tool so paths can be rendered
-@tool
+# @tool
 
 ## Manages enemies in the level
 class_name EnemyManager

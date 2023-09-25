@@ -1,7 +1,7 @@
 class_name Alertness
 enum ALERT_LEVEL { CALM, LOW, HIGH }
 var alert: float = 0
-var speed: float = 2
+var speed: float = 3
 var baseAlert: float = 0
 var alertLevel: ALERT_LEVEL = ALERT_LEVEL.CALM
 
