@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://cfdiojd2aeh7l"]
+
+[ext_resource type="Script" path="res://components/distraction/distraction.gd" id="1_iem0q"]
+[ext_resource type="Texture2D" uid="uid://tqohumjdskbs" path="res://assets/distract_detection_effect.png" id="2_e1qah"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j7i15"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_00d06"]
+
+[node name="distraction" type="Area2D"]
+collision_layer = 5
+script = ExtResource("1_iem0q")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_j7i15")
+
+[node name="DetectionArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+
+[node name="Shape" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("CircleShape2D_00d06")
+
+[node name="Sprite2D" type="Sprite2D" parent="DetectionArea"]
+texture = ExtResource("2_e1qah")
+
+[connection signal="body_entered" from="DetectionArea" to="." method="_on_detection_area_body_entered"]

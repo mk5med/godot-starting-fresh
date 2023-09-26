@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://bg8dflwyhj63m"]
+[gd_scene load_steps=6 format=3 uid="uid://bg8dflwyhj63m"]
 
 [ext_resource type="PackedScene" uid="uid://bgdhe4waxlfjy" path="res://components/player/player.tscn" id="1_5kvux"]
 [ext_resource type="PackedScene" uid="uid://dnxsng4ofrx2t" path="res://components/surface/surface.tscn" id="2_0c4sn"]
 [ext_resource type="PackedScene" uid="uid://bcjdwcdloq6fa" path="res://components/enemy/enemy.tscn" id="3_usmon"]
 [ext_resource type="PackedScene" uid="uid://ci4yn7jo7mrue" path="res://components/enemy/enemymanager.tscn" id="4_line8"]
+[ext_resource type="PackedScene" uid="uid://cfdiojd2aeh7l" path="res://components/distraction/distraction.tscn" id="5_ghg75"]
 
 [node name="Node2D" type="Node2D"]
 
@@ -17,6 +18,9 @@ position = Vector2(21, 620)
 position = Vector2(21, 620)
 
 [node name="enemy" parent="." instance=ExtResource("3_usmon")]
-position = Vector2(39, 143)
+position = Vector2(207, 352)
 
 [node name="enemymanager" parent="." instance=ExtResource("4_line8")]
+
+[node name="distraction" parent="." instance=ExtResource("5_ghg75")]
+position = Vector2(196, 252)

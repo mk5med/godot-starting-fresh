@@ -37,7 +37,7 @@ func update(delta: float):
 	else:
 		# The hunt is SEARCHING
 		# Rotate 360 degrees
-		self.enemy.rotate(PI / SEARCH_TIME * delta * 6)
+		self.enemy.rotation = PI / SEARCH_TIME * sin(4 * searchTimeRemaining)
 		pass
 
 

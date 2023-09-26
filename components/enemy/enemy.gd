@@ -14,7 +14,7 @@ var index = 0
 var baseState = ENEMY_STATE.IDLE
 var state: ENEMY_STATE = baseState
 var alertness = Alertness.new()
-var player: Player = null
+var player: Node2D = null
 var hunt: Hunt
 
 
@@ -78,14 +78,10 @@ func _physics_process(delta):
 		followPath(delta)
 
 
-func _on_detection_area_body_entered(body):
-	print("Entered ", body)
+func _onSomethingEntered(body: Node2D):
 	player = body
 	hunt.setSearchPos(player.position)
-	pass
 
 
-func _on_detection_area_body_exited(body):
-	print("Exited ", body)
+func _onSomethingExited(_body: Node2D):
 	player = null
-	pass
