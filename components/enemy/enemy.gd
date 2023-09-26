@@ -9,79 +9,109 @@ var elapsed_time = 0
 var vision_range = 5
 @export var travel_points: Array[Vector2] = []
 
-var index = 0
-
 var baseState = ENEMY_STATE.IDLE
+
 var state: ENEMY_STATE = baseState
 var alertness = Alertness.new()
-var player: Node2D = null
-var hunt: Hunt
+var unknownObject: Node2D = null
+
+var action_hunt: EnemyActionHunt
+var action_move: EnemyActionMove
+
+var startPos: Vector2
+var movingBack = false
 
 
 func _init():
-	hunt = Hunt.new(self)
+	action_hunt = EnemyActionHunt.new(self)
+	action_move = EnemyActionMove.new(self, travel_points)
 
 
-func followPath(delta):
-	if len(travel_points) == 0:
+func setState(_state: ENEMY_STATE):
+	# NOP
+	if state == _state:
 		return
 
-	# Find the direction from the target point to the current position in world space
-	var direction = (travel_points[index] - position).normalized()
+	if _state == ENEMY_STATE.HUNTING:
+		# Log the position when hunting started
+		startPos = position
 
-	look_at(direction)
-	move_and_collide(direction * delta)
+	## BEGIN CODE FOR MOVING BACK AFTER HUNTING
+	# The enemy was moving back and has returned to the starting position
+	if movingBack and startPos == position:
+		movingBack = false
 
-	# Increment the position to reach when the node is close enough
-	if (position - travel_points[index]).length() <= 5:
-		index += 1
+	# The state was previously hunting and it is being transitioned to a non-hunting state
+	if state == ENEMY_STATE.HUNTING and startPos != position:
+		# Move the enemy to the position before hunting started
+		action_move.setNextLocation(startPos)
+		movingBack = true
 
-	# Loop back when the index exceeds the array size
-	if len(travel_points) <= index:
-		index = 0
-		return
+	if movingBack:
+		# Modify the next state to be moving
+		_state = ENEMY_STATE.MOVING
+	## END CODE FOR MOVING BACK AFTER HUNTING
+
+	# Update the state
+	state = _state
 
 
-func _physics_process(delta):
-	elapsed_time += delta
-
-	# If the enemy is hunting
+func calculateState():
+	# If the enemy is hunting and the suspicious object has not been lost (CHASING or SEARCHING)
 	if state == ENEMY_STATE.HUNTING:
-		# Track the player while in range
-		if player != null:
-			hunt.setSearchPos(player.position)
-			hunt.setState(Hunt.HUNT_STATE.CHASING)
-		else:
-			hunt.setState(Hunt.HUNT_STATE.SEARCHING)
-
-		hunt.update(delta)
-
-		# Don't process further
-		if hunt.state != Hunt.HUNT_STATE.LOST:
+		# CHASING or SEARCHING blocks ALERT_LEVEL from decreasing
+		if action_hunt.state != EnemyActionHunt.HUNT_STATE.LOST:
 			return
+		else:
+			# Change the alert to LOW
+			alertness.setAlert(alertness.THRESHOLD_ALERT_LOW)
 
-	# Update the alertness
-	alertness.update(player != null, delta)
+	# state is HUNTING and LOST, MOVING, or IDLE
 	var aLevel = alertness.alertLevel
 
 	if aLevel == Alertness.ALERT_LEVEL.CALM:
 		# Return to normal
-		state = baseState
+		setState(baseState)
 	elif aLevel == Alertness.ALERT_LEVEL.LOW:
 		# Stop and wait for something to happen
-		state = ENEMY_STATE.IDLE
+		setState(ENEMY_STATE.IDLE)
 	elif aLevel == Alertness.ALERT_LEVEL.HIGH:
 		# Hunt the suspicious activity
-		state = ENEMY_STATE.HUNTING
+		setState(ENEMY_STATE.HUNTING)
 
-	if state == ENEMY_STATE.MOVING:
-		followPath(delta)
+
+## STATE MANAGEMENT
+func updateState(delta: float):
+	# Only update the alert level if the enemy is not currently hunting
+	if state != ENEMY_STATE.HUNTING:
+		alertness.update(unknownObject != null, delta)
+
+	calculateState()
+
+
+func _physics_process(delta):
+	updateState(delta)
+
+	# If the enemy is hunting
+	if state == ENEMY_STATE.HUNTING:
+		# Track the unknownObject while in range
+		if unknownObject != null:
+			action_hunt.setSearchPos(unknownObject.position)
+			action_hunt.setState(EnemyActionHunt.HUNT_STATE.CHASING)
+		else:
+			action_hunt.setState(EnemyActionHunt.HUNT_STATE.SEARCHING)
+
+		action_hunt.update(delta)
+
+	# The enemy is patrolling or moving back
+	elif state == ENEMY_STATE.MOVING:
+		action_move.update(delta)
 
 
 func _onSomethingEntered(body: Node2D):
-	player = body
-	hunt.setSearchPos(player.position)
+	unknownObject = body
+	action_hunt.setSearchPos(unknownObject.position)
 
 
 func _onSomethingExited(_body: Node2D):
-	player = null
+	unknownObject = null

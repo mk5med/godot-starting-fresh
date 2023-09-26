@@ -1,4 +1,4 @@
-class_name Hunt
+class_name EnemyActionHunt
 enum HUNT_STATE { LOST, SEARCHING, CHASING }
 const SEARCH_TIME = 5
 
