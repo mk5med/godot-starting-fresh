@@ -38,6 +38,8 @@ position = Vector2(11, 0)
 scale = Vector2(0.0859375, 0.0078125)
 texture = ExtResource("2_0ksqu")
 
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
 [connection signal="area_entered" from="DetectionArea" to="." method="_onSomethingEntered"]
 [connection signal="area_exited" from="DetectionArea" to="." method="_onSomethingExited"]
 [connection signal="body_entered" from="DetectionArea" to="." method="_onSomethingEntered"]

@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://bg8dflwyhj63m"]
+
+[ext_resource type="PackedScene" uid="uid://bgdhe4waxlfjy" path="res://components/player/player.tscn" id="1_0qfhl"]
+[ext_resource type="PackedScene" uid="uid://dnxsng4ofrx2t" path="res://components/surface/surface.tscn" id="2_og5f2"]
+[ext_resource type="PackedScene" uid="uid://bcjdwcdloq6fa" path="res://components/enemy/enemy.tscn" id="3_bpgvi"]
+[ext_resource type="PackedScene" uid="uid://ci4yn7jo7mrue" path="res://components/enemy/enemymanager.tscn" id="4_4ecxi"]
+[ext_resource type="PackedScene" uid="uid://cfdiojd2aeh7l" path="res://components/distraction/distraction.tscn" id="5_emtwo"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="player" parent="." instance=ExtResource("1_0qfhl")]
+position = Vector2(110, 144)
+
+[node name="surface" parent="." instance=ExtResource("2_og5f2")]
+position = Vector2(21, 620)
+
+[node name="surface2" parent="." instance=ExtResource("2_og5f2")]
+position = Vector2(21, 620)
+
+[node name="enemy" parent="." instance=ExtResource("3_bpgvi")]
+position = Vector2(207, 352)
+
+[node name="enemymanager" parent="." instance=ExtResource("4_4ecxi")]
+
+[node name="distraction" parent="." instance=ExtResource("5_emtwo")]
+position = Vector2(196, 252)
