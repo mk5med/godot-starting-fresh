@@ -6,11 +6,13 @@ var suspiciousPos: Vector2
 var enemy: Enemy
 var state: HUNT_STATE = HUNT_STATE.SEARCHING
 var searchTimeRemaining = SEARCH_TIME
+var navigationAgent: NavigationAgent2D
+var huntSpeed = 150
 
 
 func _init(_enemy: Enemy):
-	print(_enemy)
 	self.enemy = _enemy
+	navigationAgent = enemy.get_node("NavigationAgent2D")
 
 
 func update(delta: float):
@@ -31,18 +33,48 @@ func update(delta: float):
 	if state == HUNT_STATE.CHASING:
 		self.enemy.look_at(suspiciousPos)
 
-		# Navigate towards the position
-		var dir = (suspiciousPos - self.enemy.position).normalized()
-		self.enemy.move_and_collide(dir * delta * 280)
+		var curGlobalPos = enemy.global_position
+		var nextGlobalPos = navigationAgent.get_next_path_position()
+		var direction = (nextGlobalPos - curGlobalPos).normalized()
+
+		print(
+			(
+				"HUNTING: Going from %s to %s with direction %s"
+				% [curGlobalPos, nextGlobalPos, direction]
+			)
+		)
+
+		# Look at the direction to move
+		enemy.look_at(nextGlobalPos)
+
+		# Move
+		enemy.move_and_collide(direction * delta * huntSpeed)
+
+		if navigationAgent.is_navigation_finished():
+			print("Done navigation to %s " % [suspiciousPos])
+			setState(HUNT_STATE.SEARCHING)
+
 	else:
 		# The hunt is SEARCHING
 		# Rotate 360 degrees
 		self.enemy.rotation = PI / SEARCH_TIME * sin(4 * searchTimeRemaining)
-		pass
+
+
+var suspiciousObjectInView = false
+
+
+func setSuspicousObjectInView(suspiciousObject):
+	suspiciousObjectInView = suspiciousObject != null
+
+	if suspiciousObjectInView:
+		var _s = suspiciousObject as Node2D
+		setSearchPos(suspiciousObject.global_position)
+		setState(HUNT_STATE.CHASING)
 
 
 func setSearchPos(pos: Vector2):
 	self.suspiciousPos = pos
+	navigationAgent.target_position = pos
 
 
 func setState(_state: HUNT_STATE):

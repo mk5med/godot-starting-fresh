@@ -60,5 +60,4 @@ func _stateMachine():
 
 
 func _on_detection_area_body_entered(body: Node2D):
-	print(body)
 	pass  # Replace with function body.

@@ -7,11 +7,13 @@ var enemy: Enemy
 # TODO: How to specify the type of a variable as Null or Vector2
 var nextLocation
 var speed = 100
+var navigationAgent: NavigationAgent2D
 
 
 func _init(_enemy, _travel_points):
 	travel_points = _travel_points
 	enemy = _enemy
+	navigationAgent = enemy.get_node("NavigationAgent2D")
 
 	# Initialise the next location to navigate if it exists
 	if len(travel_points) > 0:
@@ -19,14 +21,21 @@ func _init(_enemy, _travel_points):
 
 
 func update(delta: float):
+	if navigationAgent.is_navigation_finished():
+		return
+
 	if nextLocation == null:
 		return
 
 	# Find the direction from the target point to the current position in world space
-	var direction = (nextLocation - enemy.position).normalized()
+	var curGlobalPos = enemy.global_position
+	var nextGlobalPos = navigationAgent.get_next_path_position()
+	var direction = (nextGlobalPos - curGlobalPos).normalized()
+
+	print("Going from %s to %s with direction %s" % [curGlobalPos, nextGlobalPos, direction])
 
 	# Look at the direction to move
-	enemy.look_at(direction)
+	enemy.look_at(nextGlobalPos)
 
 	# Move
 	enemy.move_and_collide(direction * delta * speed)
@@ -62,3 +71,5 @@ func update(delta: float):
 ## Set the next location to navigate to
 func setNextLocation(pos):
 	nextLocation = pos
+	if pos != null:
+		navigationAgent.target_position = pos

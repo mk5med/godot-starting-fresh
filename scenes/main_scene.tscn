@@ -1,18 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://de45cwmkilluk"]
+[gd_scene load_steps=6 format=3 uid="uid://de45cwmkilluk"]
 
 [ext_resource type="PackedScene" uid="uid://bgdhe4waxlfjy" path="res://components/player/player.tscn" id="1_5kvux"]
 [ext_resource type="PackedScene" uid="uid://sxj4grn1qfb8" path="res://components/map_generator/map_generator.tscn" id="2_48y8y"]
 [ext_resource type="PackedScene" uid="uid://bcjdwcdloq6fa" path="res://components/enemy/enemy.tscn" id="3_ukkpl"]
+[ext_resource type="PackedScene" uid="uid://cfdiojd2aeh7l" path="res://components/distraction/distraction.tscn" id="4_p8dvk"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_vvw5n"]
-vertices = PackedVector2Array(102, 23, 257, 25, 203, 136, 187, 147, 101, 1101, 189, 980, 213, 1101, 214, 1053, 550, 983, 408, 1056, 909, 1125, 910, 1464, 505, 1460, 503, 1413, 409, 1267, 907, 889, 553, 886)
-polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3), PackedInt32Array(4, 0, 3, 5), PackedInt32Array(6, 4, 5, 7), PackedInt32Array(7, 5, 8, 9), PackedInt32Array(10, 11, 12, 13), PackedInt32Array(10, 13, 14, 9, 8, 15), PackedInt32Array(15, 8, 16)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(102, 23, 101, 1101, 213, 1101, 214, 1053, 408, 1056, 409, 1267, 503, 1413, 505, 1460, 910, 1464, 909, 1125, 907, 889, 553, 886, 550, 983, 189, 980, 187, 147, 203, 136, 257, 25)])
+vertices = PackedVector2Array(765, 27, 765, 501, 673, 525, 675, 187, 688, 139, 102, 23, 664, 138, 223, 141, 190, 117, 284, 372, 356, 362, 359, 478, 187.792, 476.768, 265, 391, 909, 1125, 910, 1464, 505, 1460, 503, 1413, 907, 889, 409, 1267, 408, 1056, 550, 983, 271, 355, 269, 175, 356, 174, 190, 393, 214, 1053, 213, 1101, 101, 1101, 189, 980, 553, 886, 179, 360, 169, 147, 190, 354)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4), PackedInt32Array(5, 0, 4, 6), PackedInt32Array(5, 6, 7, 8), PackedInt32Array(9, 10, 11, 12, 13), PackedInt32Array(14, 15, 16, 17), PackedInt32Array(18, 14, 17, 19, 20, 21), PackedInt32Array(22, 23, 24, 10, 9), PackedInt32Array(25, 13, 12), PackedInt32Array(26, 27, 28, 29), PackedInt32Array(21, 30, 18), PackedInt32Array(29, 21, 20, 26), PackedInt32Array(12, 29, 28, 5, 31), PackedInt32Array(5, 8, 32), PackedInt32Array(32, 33, 31, 5), PackedInt32Array(12, 31, 25)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(102, 23, 101, 1101, 213, 1101, 214, 1053, 408, 1056, 409, 1267, 503, 1413, 505, 1460, 910, 1464, 909, 1125, 907, 889, 553, 886, 550, 983, 189, 980, 187.792, 476.768, 359, 478, 356, 362, 356, 174, 269, 175, 271, 355, 284, 372, 265, 391, 190, 393, 179, 360, 190, 354, 169, 147, 190, 117, 223, 141, 664, 138, 688, 139, 675, 187, 673, 525, 765, 501, 765, 27)])
 
 [node name="main_scene" type="Node2D"]
 
 [node name="player" parent="." instance=ExtResource("1_5kvux")]
-position = Vector2(284, 180)
+position = Vector2(419, 69)
 
 [node name="TileMap" parent="." instance=ExtResource("2_48y8y")]
 
@@ -20,4 +21,7 @@ position = Vector2(284, 180)
 navigation_polygon = SubResource("NavigationPolygon_vvw5n")
 
 [node name="enemy" parent="." instance=ExtResource("3_ukkpl")]
-position = Vector2(171, 75)
+position = Vector2(148, 294)
+
+[node name="distraction" parent="." instance=ExtResource("4_p8dvk")]
+position = Vector2(282, 223)

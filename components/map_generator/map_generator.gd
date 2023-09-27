@@ -11,11 +11,14 @@ var _texture: CompressedTexture2D
 	get:
 		return _texture
 
+
 func _init():
 	createMap()
 
+
 func _ready():
 	createMap()
+
 
 func createMap():
 	if _texture == null:
@@ -28,10 +31,5 @@ func createMap():
 
 	for x in range(w):
 		for y in range(h):
-			if data.get_pixel(x,y) == Color.BLACK:
-				self.set_cell(
-					0,
-					Vector2(x, y),
-					0,
-					Vector2(0,0)
-				)
+			if data.get_pixel(x, y) == Color.BLACK:
+				self.set_cell(0, Vector2(x, y), 0, Vector2(0, 0))

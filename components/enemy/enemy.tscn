@@ -5,6 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://rkteka05dxkc" path="res://assets/enemy_detection_range.png" id="2_t6s1l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ku6j"]
+size = Vector2(16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fcma1"]
 size = Vector2(130, 46)

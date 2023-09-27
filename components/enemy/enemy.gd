@@ -20,9 +20,12 @@ var action_move: EnemyActionMove
 
 var startPos: Vector2
 var movingBack = false
+@onready var navigationAgent = $NavigationAgent2D
 
 
-func _init():
+func _ready():
+	navigationAgent.path_desired_distance = 4.0
+	navigationAgent.target_desired_distance = 4.0
 	action_hunt = EnemyActionHunt.new(self)
 	action_move = EnemyActionMove.new(self, travel_points)
 
@@ -94,13 +97,7 @@ func _physics_process(delta):
 
 	# If the enemy is hunting
 	if state == ENEMY_STATE.HUNTING:
-		# Track the unknownObject while in range
-		if unknownObject != null:
-			action_hunt.setSearchPos(unknownObject.position)
-			action_hunt.setState(EnemyActionHunt.HUNT_STATE.CHASING)
-		else:
-			action_hunt.setState(EnemyActionHunt.HUNT_STATE.SEARCHING)
-
+		action_hunt.setSuspicousObjectInView(unknownObject)
 		action_hunt.update(delta)
 
 	# The enemy is patrolling or moving back
@@ -110,7 +107,6 @@ func _physics_process(delta):
 
 func _onSomethingEntered(body: Node2D):
 	unknownObject = body
-	action_hunt.setSearchPos(unknownObject.position)
 
 
 func _onSomethingExited(_body: Node2D):
