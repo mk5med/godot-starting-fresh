@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://buq3bvyw1eehp"
-path="res://.godot/imported/enemy.png-63f114c7bb3f2105c232c34f647cbc2d.ctex"
+uid="uid://c76omd363gxye"
+path="res://.godot/imported/enemy_states.png-04c27b2b6de04a9e712a5c6a2b88400b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/enemy.png"
-dest_files=["res://.godot/imported/enemy.png-63f114c7bb3f2105c232c34f647cbc2d.ctex"]
+source_file="res://documentation/enemy_states.png"
+dest_files=["res://.godot/imported/enemy_states.png-04c27b2b6de04a9e712a5c6a2b88400b.ctex"]
 
 [params]
 

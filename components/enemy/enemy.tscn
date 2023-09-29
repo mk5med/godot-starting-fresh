@@ -1,16 +1,21 @@
-[gd_scene load_steps=6 format=3 uid="uid://bcjdwcdloq6fa"]
+[gd_scene load_steps=7 format=3 uid="uid://clscbtfq6divk"]
 
 [ext_resource type="Script" path="res://components/enemy/enemy.gd" id="1_74fya"]
-[ext_resource type="Texture2D" uid="uid://buq3bvyw1eehp" path="res://assets/enemy.png" id="2_0ksqu"]
-[ext_resource type="Texture2D" uid="uid://rkteka05dxkc" path="res://assets/enemy_detection_range.png" id="2_t6s1l"]
+[ext_resource type="Texture2D" uid="uid://rkteka05dxkc" path="res://assets/images/enemy_detection_range.png" id="2_u3f3y"]
+[ext_resource type="Texture2D" uid="uid://buq3bvyw1eehp" path="res://assets/images/enemy.png" id="3_mk0r3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ku6j"]
 size = Vector2(16, 16)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fcma1"]
-size = Vector2(130, 46)
+size = Vector2(141.5, 65)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6thdr"]
+size = Vector2(175, 86)
 
 [node name="enemy" type="StaticBody2D"]
+collision_layer = 8
+collision_mask = 9
 script = ExtResource("1_74fya")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -20,24 +25,29 @@ shape = SubResource("RectangleShape2D_8ku6j")
 collision_layer = 0
 collision_mask = 2
 
+[node name="Sprite2D" type="Sprite2D" parent="DetectionArea"]
+modulate = Color(1, 1, 1, 0.227451)
+position = Vector2(157.933, 1.99965)
+rotation = -1.5708
+scale = Vector2(0.296801, 0.61758)
+texture = ExtResource("2_u3f3y")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
-position = Vector2(55, 0)
+position = Vector2(70.75, -2.5)
 shape = SubResource("RectangleShape2D_fcma1")
 
-[node name="Sprite2D" type="Sprite2D" parent="DetectionArea"]
-position = Vector2(60.7285, 2)
-rotation = -1.5708
-scale = Vector2(0.20864, 0.237876)
-texture = ExtResource("2_t6s1l")
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="DetectionArea"]
+position = Vector2(228.5, -1)
+shape = SubResource("RectangleShape2D_6thdr")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(0.0859375, 0.0859375)
-texture = ExtResource("2_0ksqu")
+texture = ExtResource("3_mk0r3")
 
 [node name="Forward" type="Sprite2D" parent="."]
 position = Vector2(11, 0)
 scale = Vector2(0.0859375, 0.0078125)
-texture = ExtResource("2_0ksqu")
+texture = ExtResource("3_mk0r3")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 

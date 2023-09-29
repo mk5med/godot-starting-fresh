@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://tqohumjdskbs"
-path="res://.godot/imported/distract_detection_effect.png-82f7ff8b5e83386a620c08b20e676ef4.ctex"
+path="res://.godot/imported/distract_detection_effect.png-a14260636fad9a340767b27bebe82c1a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/distract_detection_effect.png"
-dest_files=["res://.godot/imported/distract_detection_effect.png-82f7ff8b5e83386a620c08b20e676ef4.ctex"]
+source_file="res://assets/images/distract_detection_effect.png"
+dest_files=["res://.godot/imported/distract_detection_effect.png-a14260636fad9a340767b27bebe82c1a.ctex"]
 
 [params]
 

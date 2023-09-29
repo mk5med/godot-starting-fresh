@@ -2,26 +2,29 @@ class_name Player
 extends CharacterBody2D
 
 var PlayerScene = load("res://components/player/player.tscn")
+enum MODE { PLAY, REPLAY, IDLE }
+const actions = ["ui_left", "ui_right", "ui_up", "ui_down"]
 
 # CONFIG
 var speed = 300
-var jumpSpeed = -300
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var timeSinceStart = 0
+
 var actionEventLog: ActionEventLog = null
 var replayActionEventLog: ReplayActionEventLog = null
 var initialTransform: Transform2D
 var inputSource = Input
-const actions = ["ui_left", "ui_right", "ui_up", "ui_down"]
-enum MODE { PLAY, REPLAY, IDLE }
 
 var mode = MODE.PLAY
-
+@onready var camera = $Camera2D
 
 func _ready():
 	self.actionEventLog = ActionEventLog.new(actions)
 	self.initialTransform = Transform2D(self.transform)
-	pass
+	
+	# Disable the camera if this is a clone
+	if self.inputSource != Input:
+		camera.enabled = false
+		camera.queue_free()
 
 
 func _input(_event: InputEvent):
@@ -60,9 +63,8 @@ func startFresh():
 
 	# Reset the original array
 	actionEventLog.reset()
-	initialTransform = transform
+	transform = initialTransform
 	timeSinceStart = 0
-
 
 func replayMode(delta: float):
 	var done = replayActionEventLog.update(delta)

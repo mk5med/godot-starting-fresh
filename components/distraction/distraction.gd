@@ -11,6 +11,8 @@ var maxRadius = 200
 var minRadius = 0
 const SUSPICION_LAYER = 2
 
+func _ready():
+	reset()
 
 func _input(event):
 	if event.is_pressed() and event.as_text() == "G":
@@ -48,15 +50,15 @@ func _physics_process(delta):
 		shape.radius = move_toward(shape.radius, maxRadius, delta * growSpeed)
 
 		if shape.radius == maxRadius:
-			state = STATE.NONE
-			shape.radius = minRadius
-			detectionArea.set_collision_layer_value(SUSPICION_LAYER, false)
+			reset()
 
 	pass
 
 
-func _stateMachine():
-	pass
+func reset():
+	state = STATE.NONE
+	shape.radius = minRadius
+	detectionArea.set_collision_layer_value(SUSPICION_LAYER, false)
 
 
 func _on_detection_area_body_entered(body: Node2D):
