@@ -3,8 +3,8 @@
 [ext_resource type="PackedScene" uid="uid://bgdhe4waxlfjy" path="res://components/player/player.tscn" id="1_5kvux"]
 [ext_resource type="NavigationPolygon" uid="uid://8ubescunmjsg" path="res://assets/navigation/navigation_main.tres" id="1_db6iy"]
 [ext_resource type="PackedScene" uid="uid://sxj4grn1qfb8" path="res://components/map_generator/map_generator.tscn" id="2_48y8y"]
-[ext_resource type="PackedScene" uid="uid://bcjdwcdloq6fa" path="res://components/enemy/enemy.tscn" id="3_ukkpl"]
-[ext_resource type="PackedScene" uid="uid://cfdiojd2aeh7l" path="res://components/distraction/distraction.tscn" id="4_p8dvk"]
+[ext_resource type="PackedScene" uid="uid://clscbtfq6divk" path="res://components/enemy/enemy.tscn" id="3_ukkpl"]
+[ext_resource type="PackedScene" uid="uid://ch8egot45ytrv" path="res://components/distraction/distraction.tscn" id="4_p8dvk"]
 
 [node name="main_scene" type="Node2D"]
 
@@ -40,4 +40,4 @@ rotation = 3.14159
 position = Vector2(1380, 679)
 
 [node name="distraction2" parent="." instance=ExtResource("4_p8dvk")]
-position = Vector2(880, 1166)
+position = Vector2(933, 939)

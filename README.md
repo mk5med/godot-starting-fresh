@@ -24,6 +24,8 @@ The enemy has three states: idle, moving, and hunting. The enemy scene was desig
 
 ## Player
 
+![Player movement](./documentation/player_moving.gif)
+
 The player class is designed to work with any class that implements some of the interface of the built-in `Input` class.
 
 1. When the player is in `PLAY` mode, the class will record the state changes of Godot input events and the time when they happened. The input events are logged with the `ActionEventLog.gd` class.
@@ -32,6 +34,8 @@ The player class is designed to work with any class that implements some of the 
 4. `ReplayActionEventLog.gd` reads the events and replays them at the correct time using the linked timestamps.
 
 ## Map generator
+
+![Map generator gif](./documentation/map_generator.gif)
 
 This is the simplest implementation of the project.
 
