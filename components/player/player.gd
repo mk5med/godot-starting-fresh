@@ -17,10 +17,11 @@ var inputSource = Input
 var mode = MODE.PLAY
 @onready var camera = $Camera2D
 
+
 func _ready():
 	self.actionEventLog = ActionEventLog.new(actions)
 	self.initialTransform = Transform2D(self.transform)
-	
+
 	# Disable the camera if this is a clone
 	if self.inputSource != Input:
 		camera.enabled = false
@@ -65,6 +66,7 @@ func startFresh():
 	actionEventLog.reset()
 	transform = initialTransform
 	timeSinceStart = 0
+
 
 func replayMode(delta: float):
 	var done = replayActionEventLog.update(delta)

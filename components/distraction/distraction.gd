@@ -11,8 +11,10 @@ var maxRadius = 200
 var minRadius = 0
 const SUSPICION_LAYER = 2
 
+
 func _ready():
 	reset()
+
 
 func _input(event):
 	if event.is_pressed() and event.as_text() == "G":
