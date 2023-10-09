@@ -6,6 +6,9 @@ This godot project contains a collection of ideas that I wanted to try.
 - Dynamic tilemap generation from images.
 - Enemy state management for ALERTNESS and HUNTING actions.
 
+## Developer requirements
+- Godot v4.1
+
 ## Project overview
 The project is broken into three folders: assets, components, scenes.
 
